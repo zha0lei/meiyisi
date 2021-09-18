@@ -1,3 +1,16 @@
+pipeline {
+  stages {
+    stage{
+      steps {
+        sh """
+        echo hehe
+        """
+      }
+    }
+  }
+}
+
+
 #pipeline {
 #    // parameters {
 #    //     //string(defaultValue: 'develop', description: 'mm-test-discovery-server分支', name: 'Dep_Branch', trim: true)
