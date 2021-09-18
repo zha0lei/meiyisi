@@ -1,15 +1,25 @@
 pipeline {
-  stages {
-    stage{
-      steps {
-        sh """
-        echo hehe
-        """
-      }
+    agent { label '10.3.153.202'}      #指定在那台Jenkins节点上运行
+    stages {
+        stage('更新开始') {
+            steps {
+                echo '更新开始'
+                sh 'printenv'
+            }
+        }
+        stage('build-image') {
+            steps {
+                retry(2) { sh 'docker build . -t myblog:latest'}    #构建镜像
+            }
+        }
+        stage('deploy') {
+            steps {
+                timeout(time: 1, unit: 'MINUTES') {sh "kubectl apply -f deploy/"     #创建deployment
+                }
+            }
+        }
     }
-  }
 }
-
 
 #pipeline {
 #    // parameters {
